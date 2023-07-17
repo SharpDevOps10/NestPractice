@@ -8,6 +8,7 @@ import { Users } from './users/users.model';
 import { RolesModule } from './roles/roles.module';
 import { Role } from './roles/roles.model';
 import { UserRoles } from './roles/users-roles.model';
+import { AuthorizationModule } from './authorization/authorization.module';
 
 @Module({
   controllers: [],
@@ -28,6 +29,7 @@ import { UserRoles } from './roles/users-roles.model';
     }),
     UsersModule,
     RolesModule,
+    AuthorizationModule,
   ],
 
 })
