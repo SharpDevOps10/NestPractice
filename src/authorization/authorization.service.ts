@@ -1,9 +1,10 @@
-import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto } from '../users/dto/CreateUserDTO';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 import { Users } from '../users/users.model';
+import { UserEmailException } from '../exceptions/UserEmailException';
 
 @Injectable()
 export class AuthService {
@@ -20,9 +21,8 @@ export class AuthService {
 
   async registration (userDto: CreateUserDto) {
     const candidate = await this.userService.getUserByEmail(userDto.email);
-    if (candidate) {
-      throw new HttpException('Пользователь с таким email существует', HttpStatus.BAD_REQUEST);
-    }
+    if (candidate) throw new UserEmailException();
+
     const hashPassword = await bcrypt.hash(userDto.password, 5);
     const user = await this.userService.createUser({
       ...userDto,
@@ -49,7 +49,7 @@ export class AuthService {
       return user;
     }
     throw new UnauthorizedException({
-      message: 'Некорректный емайл или пароль',
+      message: 'Incorrect email or password',
     });
   }
 
