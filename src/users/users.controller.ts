@@ -6,6 +6,7 @@ import { Users } from './users.model';
 import { Roles } from '../authorization/roles-auth.decorator';
 import { RolesGuard } from '../authorization/roles.guard';
 import { AddRoleDto } from './dto/AddRoleDTO';
+import { BanUserDto } from './dto/BanUserDTO';
 
 @ApiTags('Users')
 @Controller('users')
@@ -34,5 +35,14 @@ export class UsersController {
   @Post('/role')
   addRole (@Body() dto: AddRoleDto) {
     return this.userService.addRole(dto);
+  }
+
+  @ApiOperation({ summary: 'Ban this user' })
+  @ApiResponse({ status: 200 })
+  @Roles('ADMIN')
+  @UseGuards(RolesGuard)
+  @Post('/ban')
+  ban (@Body() dto: BanUserDto) {
+    return this.userService.ban(dto);
   }
 }

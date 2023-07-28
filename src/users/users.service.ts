@@ -5,6 +5,8 @@ import { CreateUserDto } from './dto/CreateUserDTO';
 import { RolesService } from '../roles/roles.service';
 import { AddRoleDto } from './dto/AddRoleDTO';
 import { InvalidRoleException } from '../exceptions/InvalidRoleException';
+import { BanUserDto } from './dto/BanUserDTO';
+import { UserNotFoundException } from '../exceptions/UserNotFoundException';
 
 @Injectable()
 export class UsersService {
@@ -51,6 +53,17 @@ export class UsersService {
       return dto;
     }
     throw new InvalidRoleException();
+  }
+
+  async ban (dto: BanUserDto) {
+    const user = await this.userRepository.findByPk(dto.userId);
+    if (!user) throw new UserNotFoundException();
+
+    user.banned = true;
+    user.banReason = dto.banReason;
+    await user.save();
+
+    return user;
   }
 
 }
