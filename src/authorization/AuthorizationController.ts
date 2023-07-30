@@ -6,7 +6,9 @@ import { AuthService } from './AuthorizationService';
 @ApiTags('Authorization')
 @Controller('authorization')
 export class AuthorizationController {
-  constructor (private authService: AuthService) {}
+  constructor (
+    private authService: AuthService,
+  ) {}
 
   @Post('/login')
   login (@Body() userDto: CreateUserDto) {
