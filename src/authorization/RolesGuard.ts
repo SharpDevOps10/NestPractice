@@ -7,7 +7,7 @@ import {
 import { Observable } from 'rxjs';
 import { JwtService } from '@nestjs/jwt';
 import { Reflector } from '@nestjs/core';
-import { ROLES_KEY } from './roles-auth.decorator';
+import { ROLES_KEY } from './RolesAuthDecorator';
 import { NoPermissionException } from '../exceptions/NoPermissionException';
 
 @Injectable()

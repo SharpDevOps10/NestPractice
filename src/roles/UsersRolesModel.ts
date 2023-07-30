@@ -1,6 +1,6 @@
 import { Model, Column, DataType, Table, ForeignKey } from 'sequelize-typescript';
-import { Role } from './roles.model';
-import { Users } from '../users/users.model';
+import { Role } from './RolesModel';
+import { Users } from '../users/UsersModel';
 
 
 

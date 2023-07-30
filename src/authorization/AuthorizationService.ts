@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../users/dto/CreateUserDTO';
-import { UsersService } from '../users/users.service';
+import { UsersService } from '../users/UsersService';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
-import { Users } from '../users/users.model';
+import { Users } from '../users/UsersModel';
 import { UserEmailException } from '../exceptions/UserEmailException';
 import { InvalidDataException } from '../exceptions/InvalidDataException';
 

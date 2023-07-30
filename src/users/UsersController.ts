@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from './dto/CreateUserDTO';
-import { UsersService } from './users.service';
+import { UsersService } from './UsersService';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Users } from './users.model';
-import { Roles } from '../authorization/roles-auth.decorator';
-import { RolesGuard } from '../authorization/roles.guard';
+import { Users } from './UsersModel';
+import { Roles } from '../authorization/RolesAuthDecorator';
+import { RolesGuard } from '../authorization/RolesGuard';
 import { AddRoleDto } from './dto/AddRoleDTO';
 import { BanUserDto } from './dto/BanUserDTO';
 

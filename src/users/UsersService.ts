@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { Users } from './users.model';
+import { Users } from './UsersModel';
 import { CreateUserDto } from './dto/CreateUserDTO';
-import { RolesService } from '../roles/roles.service';
+import { RolesService } from '../roles/RolesService';
 import { AddRoleDto } from './dto/AddRoleDTO';
 import { InvalidRoleException } from '../exceptions/InvalidRoleException';
 import { BanUserDto } from './dto/BanUserDTO';

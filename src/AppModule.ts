@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 
 import { SequelizeModule } from '@nestjs/sequelize';
-import { UsersModule } from './users/users.module';
+import { UsersModule } from './users/UsersModule';
 import { ConfigModule } from '@nestjs/config';
 import * as process from 'process';
-import { Users } from './users/users.model';
-import { RolesModule } from './roles/roles.module';
-import { Role } from './roles/roles.model';
-import { UserRoles } from './roles/users-roles.model';
-import { AuthorizationModule } from './authorization/authorization.module';
+import { Users } from './users/UsersModel';
+import { RolesModule } from './roles/RolesModule';
+import { Role } from './roles/RolesModel';
+import { UserRoles } from './roles/UsersRolesModel';
+import { AuthorizationModule } from './authorization/AuthorizationModule';
 
 @Module({
   controllers: [],
