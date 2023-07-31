@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import * as path from 'path';
-import * as fs from 'fs';
+import path from 'node:path';
+import fs from 'node:fs';
 import * as uuid from 'uuid';
 import { WritingFileException } from '../exceptions/WritingFileException';
 @Injectable()
