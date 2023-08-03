@@ -11,13 +11,17 @@ import { BanUserDto } from './dto/BanUserDTO';
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
-  constructor (private userService: UsersService) {}
+  constructor (
+    private userService: UsersService,
+  ) {}
 
   @ApiOperation({ summary: 'Creating user' })
   @ApiResponse({ status: 200, type: Users })
   @Post()
-  create (@Body() userDto: CreateUserDto) {
-    return this.userService.createUser(userDto);
+  create (
+    @Body() user: CreateUserDto,
+  ) {
+    return this.userService.createUser(user);
   }
 
   @ApiOperation({ summary: 'Getting users' })
@@ -33,8 +37,10 @@ export class UsersController {
   @Roles('ADMIN')
   @UseGuards(RolesGuard)
   @Post('/role')
-  addRole (@Body() dto: AddRoleDto) {
-    return this.userService.addRole(dto);
+  addRole (
+    @Body() role: AddRoleDto,
+  ) {
+    return this.userService.addRole(role);
   }
 
   @ApiOperation({ summary: 'Ban this user' })
@@ -42,7 +48,9 @@ export class UsersController {
   @Roles('ADMIN')
   @UseGuards(RolesGuard)
   @Post('/ban')
-  ban (@Body() dto: BanUserDto) {
-    return this.userService.ban(dto);
+  ban (
+    @Body() body: BanUserDto,
+  ) {
+    return this.userService.ban(body);
   }
 }

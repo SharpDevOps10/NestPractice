@@ -11,13 +11,17 @@ export class AuthorizationController {
   ) {}
 
   @Post('/login')
-  login (@Body() userDto: CreateUserDto) {
-    return this.authService.login(userDto);
+  login (
+    @Body() user: CreateUserDto,
+  ) {
+    return this.authService.login(user);
   }
 
   @Post('/registration')
-  registration (@Body() userDto: CreateUserDto) {
-    return this.authService.registration(userDto);
+  registration (
+    @Body() user: CreateUserDto,
+  ) {
+    return this.authService.registration(user);
   }
 
 }
