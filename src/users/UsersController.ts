@@ -1,12 +1,21 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from './dto/CreateUserDTO';
 import { UsersService } from './UsersService';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiForbiddenResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { Users } from './UsersModel';
 import { Roles } from '../authorization/RolesAuthDecorator';
 import { RolesGuard } from '../authorization/RolesGuard';
 import { AddRoleDto } from './dto/AddRoleDTO';
 import { BanUserDto } from './dto/BanUserDTO';
+import { AddRoleResponse } from './responses/AddRoleResponse';
 
 @ApiTags('Users')
 @Controller('users')
@@ -32,11 +41,31 @@ export class UsersController {
   getAll () {
     return this.userService.getAllUsers();
   }
+
+
   @ApiOperation({ summary: 'Give role' })
-  @ApiResponse({ status: 200 })
+  @ApiOkResponse({
+    type: AddRoleResponse,
+  })
   @Roles('ADMIN')
   @UseGuards(RolesGuard)
   @Post('/role')
+  @ApiBadRequestResponse({
+    description: `\n
+    InvalidBodyException:
+      Value cannot be empty
+      UserId cannot be empty`,
+  })
+  @ApiUnauthorizedResponse({
+    description: `\n
+    UnauthorizedException:
+      Unauthorized`,
+  })
+  @ApiForbiddenResponse({
+    description: `\n
+    NoPermissionException:
+      You do not have permission to perform this action`,
+  })
   addRole (
     @Body() role: AddRoleDto,
   ) {

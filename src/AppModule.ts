@@ -11,7 +11,7 @@ import { UserRoles } from './roles/UsersRolesModel';
 import { AuthorizationModule } from './authorization/AuthorizationModule';
 import { Post } from './posts/PostsModel';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import path from 'node:path';
+import * as path from 'node:path';
 
 @Module({
   controllers: [],
