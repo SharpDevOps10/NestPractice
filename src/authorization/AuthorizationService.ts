@@ -3,10 +3,13 @@ import { CreateUserDto } from '../users/dto/CreateUserDTO';
 import { UsersService } from '../users/UsersService';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
+import { createHash, createHmac } from 'crypto';
 import { Users } from '../users/UsersModel';
 import { UserEmailException } from '../exceptions/UserEmailException';
 import { InvalidDataException } from '../exceptions/InvalidDataException';
 import { RegisterTelegramDTO } from './dto/RegisterTelegramDTO';
+import { TelegramDTO } from './dto/TelegramDTO';
+import { TelegramConfigService } from '../config/TelegramConfigService';
 
 export const ONE_MINUTE = 1000 * 60;
 export const HOUR = ONE_MINUTE * 60;
@@ -19,6 +22,7 @@ export class AuthService {
   constructor (
     private userService: UsersService,
     private jwtService: JwtService,
+    private telegramConfig: TelegramConfigService,
   ) {}
 
   async login (userDto: CreateUserDto) {
@@ -71,6 +75,26 @@ export class AuthService {
     setTimeout(() => {
       this.registerTelegramTokens.delete(register.token);
     }, HOUR);
+  }
+
+  isExchangeValid ({ hash, ...data }: TelegramDTO): boolean {
+    if (!data) return false;
+
+    const str = Object.keys(data)
+      .sort()
+      .map((key) => `${key}=${data[key]}`)
+      .join('\n');
+
+    try {
+      const secretKey = createHash('sha256')
+        .update(this.telegramConfig.botToken).digest();
+      const signature = createHmac('sha256', secretKey)
+        .update(str).digest('hex');
+
+      return hash === signature;
+    } catch (e) {
+      return false;
+    }
   }
 
 }
