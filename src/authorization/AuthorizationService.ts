@@ -6,9 +6,15 @@ import * as bcrypt from 'bcryptjs';
 import { Users } from '../users/UsersModel';
 import { UserEmailException } from '../exceptions/UserEmailException';
 import { InvalidDataException } from '../exceptions/InvalidDataException';
+import { RegisterTelegramDTO } from './dto/RegisterTelegramDTO';
+
+export const ONE_MINUTE = 1000 * 60;
+export const HOUR = ONE_MINUTE * 60;
 
 @Injectable()
 export class AuthService {
+
+  private registerTelegramTokens: Map<string, number> = new Map();
 
   constructor (
     private userService: UsersService,
@@ -49,6 +55,22 @@ export class AuthService {
     if (user && passwordEquals) return user;
 
     throw new InvalidDataException();
+  }
+
+  registerTelegram (register: RegisterTelegramDTO) {
+    let telegramKey;
+    for (const [key, value] of this.registerTelegramTokens.entries()) {
+      if (value === register.telegramId) {
+        telegramKey = key;
+        break;
+      }
+    }
+    if (telegramKey) this.registerTelegramTokens.delete(telegramKey);
+    this.registerTelegramTokens.set(register.token, register.telegramId);
+
+    setTimeout(() => {
+      this.registerTelegramTokens.delete(register.token);
+    }, HOUR);
   }
 
 }
