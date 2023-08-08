@@ -3,10 +3,11 @@ import { AuthorizationController } from './AuthorizationController';
 import { AuthService } from './AuthorizationService';
 import { UsersModule } from '../users/UsersModule';
 import { JwtModule } from '@nestjs/jwt';
+import { TelegramConfigService } from '../config/TelegramConfigService';
 
 @Module({
   controllers: [AuthorizationController],
-  providers: [AuthService],
+  providers: [AuthService, TelegramConfigService],
   imports: [
     forwardRef(() => UsersModule),
     JwtModule.register({
@@ -19,6 +20,7 @@ import { JwtModule } from '@nestjs/jwt';
   exports: [
     AuthService,
     JwtModule,
+    TelegramConfigService,
   ],
 })
 export class AuthorizationModule {}
