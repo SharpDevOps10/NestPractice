@@ -17,6 +17,7 @@ import { AddRoleDto } from './dto/AddRoleDTO';
 import { BanUserDto } from './dto/BanUserDTO';
 import { AddRoleResponse } from './responses/AddRoleResponse';
 import { CreateUserResponse } from './responses/CreateUserResponse';
+import { BanUserResponse } from './responses/BanUserResponse';
 
 @ApiTags('Users')
 @Controller('users')
@@ -98,7 +99,27 @@ export class UsersController {
   }
 
   @ApiOperation({ summary: 'Ban this user' })
-  @ApiResponse({ status: 200 })
+  @ApiOkResponse({
+    type: BanUserResponse,
+  })
+  @ApiBadRequestResponse({
+    description: `\n
+    InvalidBodyException:
+      User id cannot be empty
+      Ban reason cannot be empty
+      Ban reason is too short (min: 2)
+      Ban reason is too long (max: 100)`,
+  })
+  @ApiUnauthorizedResponse({
+    description: `\n
+    UnauthorizedException:
+      Unauthorized`,
+  })
+  @ApiForbiddenResponse({
+    description: `\n
+    NoPermissionException:
+      You do not have permission to perform this action`,
+  })
   @Roles('ADMIN')
   @UseGuards(RolesGuard)
   @Post('/ban')
