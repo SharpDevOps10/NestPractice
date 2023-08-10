@@ -12,7 +12,7 @@ export class TelegramDTO {
     first_name: string;
 
   @ApiProperty()
-  @IsNotEmpty(validationOptionsMsg('hash cannot be empty'))
+  @IsNotEmpty(validationOptionsMsg('Hash cannot be empty'))
     hash: string;
 
   @ApiProperty()

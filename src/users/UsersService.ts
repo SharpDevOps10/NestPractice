@@ -13,10 +13,7 @@ export class UsersService {
   constructor (
     @InjectModel(Users) private userRepository: typeof Users,
     private roleService: RolesService,
-  ) {
-
-
-  }
+  ) {}
 
   async createUser (dto: CreateUserDto) {
     const user = await this.userRepository.create(dto);
